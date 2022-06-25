@@ -1,0 +1,7 @@
+project: rust-fatfs
+target: fs-load
+
+cmds:
+  - cmd: /fs_load
+  - cmd: /fs_load_no_inst @@
+    libfuzzer: false
