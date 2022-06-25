@@ -1,0 +1,33 @@
+[package]
+name = "fatfs-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2018"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+tracing-subscriber = { version = "0.3", features = ["env-filter"], optional = true }
+
+[dependencies.fatfs]
+path = ".."
+
+[features]
+# only enable this feature when running one test case for reproduction or
+# minimization, not fuzzing
+tracing = ["tracing-subscriber"]
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "fs_load"
+path = "fuzz_targets/fs_load.rs"
+test = false
+doc = false
+
+[profile.release]
+debug = true
